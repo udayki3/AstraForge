@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AstraForge Operation Manual</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        #bg-canvas,
+        #rain-canvas {
+            opacity: 0.15 !important;
+        }
+
+        .manual-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 800px;
+            margin: 40px auto;
+            background: var(--bg2);
+            border: 1px solid var(--border2);
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 0 60px rgba(0, 212, 255, .06), 0 0 0 1px rgba(0, 212, 255, .04);
+            color: var(--text);
+            line-height: 1.6;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .manual-container h1,
+        .manual-container h2,
+        .manual-container h3,
+        .manual-container h4 {
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .manual-container h1 {
+            color: #fff;
+            text-align: center;
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(0, 212, 255, .25);
+            letter-spacing: -.02em;
+        }
+
+        .manual-container h1 span {
+            color: var(--cyan);
+        }
+
+        .manual-container .subtitle {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 40px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        .manual-container p {
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .manual-container h2 {
+            color: var(--cyan);
+            font-size: 1.4rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-top: 50px;
+            margin-bottom: 24px;
+            letter-spacing: 0.05em;
+        }
+
+        .step-box {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .step-box:hover {
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.05);
+        }
+
+        .step-title {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .step-num {
+            background: rgba(0, 212, 255, 0.15);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+        }
+
+        .manual-container ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+
+        .manual-container li {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: #b0b8d6;
+        }
+
+        .manual-container code {
+            background: rgba(0, 212, 255, 0.08);
+            color: var(--cyan);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            font-size: 0.85em;
+        }
+
+        .callout {
+            background: rgba(0, 229, 160, 0.05);
+            border-left: 3px solid var(--green);
+            padding: 16px;
+            border-radius: 0 6px 6px 0;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .callout strong {
+            color: var(--green);
+        }
+
+        .callout.info {
+            background: rgba(0, 212, 255, 0.05);
+            border-left-color: var(--cyan);
+        }
+
+        .callout.info strong {
+            color: var(--cyan);
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <canvas id="rain-canvas"></canvas>
+
+    <div class="page">
+        <div class="manual-container">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h1 style="margin-bottom: 5px;">Astra<span>Forge</span></h1>
+                <div
+                    style="font-family: 'Space Mono', monospace; font-size: 1.15rem; font-weight: 700; color: var(--muted); line-height: 1.6; margin-bottom: 20px;">
+                    <em style="color: #fff; font-style: normal;">It's Morphin' Time</em><br>Track. Compare. Compete.
+                </div>
+            </div>
+            <div class="subtitle">Private Deployment & Operation Manual</div>
+
+            <p>To keep your team's progress completely private from the public web, this app utilizes a dual-repository
+                <b>Empty Shell</b> security architecture. You will host the main UI code on a Public repository, but all
+                sensitive progress data will be silently routed to an invisible Private repository using secure scopes.
+            </p>
+
+            <!-- PART 1: SYSTEM ADMINISTRATOR SETUP -->
+            <h2>PART 1: ADMINISTRATOR SETUP (YOU)</h2>
+            <p>Follow these steps to deploy the application and establish your secure private backend.</p>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">01</span> Create the Public "App" Repository</div>
+                <ul>
+                    <li>Create a new <b>Public</b> repository on GitHub — e.g., <code>AstraForge-App</code>.
+                        <i>(Optional: Select the <b>MIT License</b> during creation to allow others to freely fork and
+                            use the UI).</i></li>
+                    <li>Upload <b>ALL</b> contents from your <code>github-deploy</code> folder into this repository. You
+                        must include the four HTML files (<code>index.html</code>, <code>dashboard.html</code>,
+                        <code>devops_roadmap.html</code>, <code>AstraForge_Operation_Manual.html</code>) <b>AND</b> the
+                        new <code>css</code> and <code>js</code>
+                        folders so the styles and logic load correctly!
+                    </li>
+                    <li>Go to repository <b>Settings -> Pages</b>, set Source to <b>Deploy from a branch</b>.</li>
+                    <li>Select the <code>main</code> branch and <code>/ (root)</code> folder, then click <b>Save</b>.
+                    </li>
+                    <li>Within 1–2 minutes, GitHub will give you a live website link. This is the UI shell!</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">02</span> Create the Private "Data" Repository</div>
+                <ul>
+                    <li>Create a second new repository, but this time select <b>Private</b> — e.g.,
+                        <code>AstraForge-Data</code>.
+                    </li>
+                    <li>Do not upload the HTML or CSS files here. Make sure it is initialized with at least a
+                        <code>README.md</code> file so the main branch is created.
+                    </li>
+                    <li><b>For Weekly Automation:</b> Upload the <code>.github</code> folder and the <code>js</code>
+                        folder into this Private Data repository. This allows the backend engine to calculate your
+                        weekly dashboard snapshots!</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">03</span> Invite Teammates to the Private Repo</div>
+                <div class="callout">
+                    <strong>Important:</strong> Only invite teammates to your <b>Private</b> repository
+                    (<code>AstraForge-Data</code>).
+                </div>
+                <ul>
+                    <li>Go to your Private repository's <b>Settings</b> > <b>Collaborators</b>.</li>
+                    <li>Click <b>Add people</b> and invite the GitHub accounts of any teammates.</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">04</span> Create Your Secure GitHub Token</div>
+                <ul>
+                    <li>Log in to GitHub and navigate via the UI to:<br><b>Settings ➔ Developer settings ➔ Personal
+                            access tokens ➔ Fine-grained tokens</b> and click <b>Generate new token</b>.</li>
+                    <li>Set the <b>Token name</b> (e.g., "AstraForge Sync") and choose an Expiration date.</li>
+                    <li>Under <b>Repository access</b>, choose <b>Only select repositories</b> and select your
+                        <u>Private</u> repository (<code>AstraForge-Data</code>).
+                    </li>
+                    <li>In <b>Repository permissions</b>, locate <b>Contents</b> and select <b>Read and write</b>.</li>
+                    <li>Click <b>Generate token</b> and copy the string immediately.</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">05</span> Launch the App</div>
+                <ul>
+                    <li>Visit your hosted public GitHub Pages URL from Step 1.</li>
+                    <li>In the <b>GitHub Repository</b> section, enter your GitHub Username and the name of your
+                        <b>Private Data Repository</b> (e.g. <code>AstraForge-Data</code>).
+                    </li>
+                    <li>Paste the <b>Personal Access Token</b> you generated in Step 4.</li>
+                    <li>In the <b>Your Profile</b> section, define the JSON filename where your own progress will be
+                        saved (e.g., <code>my_progress.json</code>).</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">06</span> Add Teammates to Your Roster (OPTIONAL)</div>
+                <ul>
+                    <li>Scroll down to the <b>Teammates</b> section and click <b>+ Add Teammate</b> to spawn a new row.
+                        (Up to 5 teammates.)</li>
+                    <li>Under <b>Name</b>, enter your friend's display name. Click the glowing <b>Color Dot</b> to open
+                        the palette and pick a custom neon theme color — this color represents them across the entire
+                        dashboard.</li>
+                    <li>Under <b>Their Sync File in Repo</b>, type the exact filename where their roadmap data is synced
+                        on GitHub — e.g., <code>devops_roadmap_progress_p2.json</code>. Must be in the same branch and
+                        repository as your main data.</li>
+                    <li>Click the green <b>Checkmark</b> on the right of the row to verify the link. A pulsing green box
+                        means success — synced. A pulsing red box means error — double-check the filename, path, or your
+                        GitHub token.</li>
+                    <li>Once your roster glows green, click <b>Launch AstraForge</b> to save your configuration and leap
+                        onto the unified dashboard!</li>
+                </ul>
+                <div class="callout" style="margin-top:16px;">
+                    <strong>Note:</strong> To remove a teammate at any point, use the <b>dustbin icon</b> next to their
+                    verification check.
+                </div>
+            </div>
+
+            <!-- PART 2: TEAMMATE SETUP (OTHER USERS) -->
+            <h2>PART 2: TEAMMATE SETUP (OTHER USERS)</h2>
+            <p>Share these precise steps with your external teammates to allow them to securely sync their own progress
+                files to the Private Tracker.</p>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">01</span> Accept the Private Repository Invitation</div>
+                <ul>
+                    <li>Wait for the Admin (Repository Owner) to invite you to the private data repository.</li>
+                    <li>Check your email or visit your GitHub notifications to accept the invitation. <b>You must accept
+                            this invitation before your token will work.</b></li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">02</span> Create Your Secure GitHub Token</div>
+                <ul>
+                    <li>Log in to GitHub and navigate via the UI to:<br><b>Settings ➔ Developer settings ➔ Personal
+                            access tokens ➔ Fine-grained tokens</b> and click <b>Generate new token</b>.<br><i>(Or go
+                            directly to: <code>https://github.com/settings/personal-access-tokens/new</code>)</i></li>
+                    <li>Provide a <b>Token name</b> (e.g., "AstraForge Course Tracking") and choose an Expiration.</li>
+                    <li>Scroll to <b>Repository access</b> and pick <b>Only select repositories</b>.</li>
+                    <li>Search for the Admin's private repository (e.g. <code>AstraForge-Data</code>) and select it.
+                    </li>
+                    <li>In <b>Repository permissions</b>, locate <b>Contents</b> and select <b>Read and write</b>.</li>
+                    <li>Click <b>Generate token</b> at the bottom. Copy this string and do not lose it.</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">03</span> Configure Your Progress Session</div>
+                <ul>
+                    <li>Load the live dashboard web page public URL provided by the Admin.</li>
+                    <li>Under <b>GitHub Repository</b>, enter the <u>Admin's GitHub Username</u> and the <u>Admin's
+                            Private Repository Name</u> (the same repo you were invited to).</li>
+                    <li>In the Token field, paste <b>your own</b> newly generated Personal Access Token.</li>
+                    <li>Under <b>Your Profile</b>, enter your name and write the exact Sync File name the Admin assigned
+                        to you (e.g., <code>teammate_progress.json</code>).</li>
+                    <li>Click <b>Launch AstraForge</b> to initialize your private dashboard!</li>
+                </ul>
+            </div>
+
+            <div class="callout" style="margin-top:24px;">
+                <strong>Security Note:</strong> Zero tracking data is transmitted to the public UI host. By generating
+                the tokens specifically against the Private Data repository, you guarantee your local progress is
+                written invisibly and exclusively to a secure, private destination under your team's complete control.
+            </div>
+
+            <!-- PART 3: DAILY INTELLIGENCE ACTIONS -->
+            <h2>PART 3: DAILY INTELLIGENCE ACTIONS (OPTIONAL)</h2>
+            <p>Your dashboard logic acts as a <b>Daily Intelligence report</b>, reading the exact day of the year and
+                rotating through a new set of 4 Fame comments, 10 Mediocre comments, and 20 Shame comments for your team
+                every single day.</p>
+            <p>To ensure the dashboard rigidly refreshes and invalidates GitHub's persistent HTML caches at exactly
+                <b>7:00 AM IST every morning</b>, deploy this precise GitHub Actions automation script.</p>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">01</span> Open Your Public Repository</div>
+                <ul>
+                    <li>Log in to GitHub and navigate to the <b>Public App Repository</b> (the one hosting your HTML
+                        files via GitHub Pages).</li>
+                    <li>At the top of the repository, click the <b>Actions</b> tab.</li>
+                    <li>If prompted, click <b>set up a workflow yourself</b> or <b>New workflow</b>.</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">02</span> Name the File</div>
+                <ul>
+                    <li>In the file name box at the top, name it exactly:<br><code
+                            style="background: rgba(0, 212, 255, 0.1); padding: 5px 8px;">.github/workflows/daily-refresh.yml</code>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">03</span> Paste the Pipeline Script</div>
+                <ul>
+                    <li>Delete any default placeholder text in the editor window.</li>
+                    <li>Copy and paste the following strict YAML configuration:</li>
+                </ul>
+                <pre
+                    style="background: rgba(0, 212, 255, 0.05); padding: 15px; border-radius: 8px; border: 1px solid rgba(0, 212, 255, 0.2); overflow-x: auto; margin-top: 15px; margin-bottom: 0px; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);"><code>name: Daily Dashboard Refresh (7am IST)
+on:
+  schedule:
+    # 01:30 UTC is exactly 07:00 IST
+    - cron: '30 1 * * *'
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  cache-bust:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Force Cache Invalidation Update
+        run: |
+          date > cache_buster.txt
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "actions@github.com"
+          git add cache_buster.txt
+          git commit -m "chore: Daily 7am IST cache bust" || echo "No changes to commit"
+          git push</code></pre>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title"><span class="step-num">04</span> Commit the Workflow</div>
+                <ul>
+                    <li>Click the green <b>Commit changes...</b> button in the top right.</li>
+                    <li>Leave the default commit message and click <b>Commit changes</b> directly to the
+                        <code>main</code> branch.</li>
+                </ul>
+                <div class="callout" style="margin-top:16px;">
+                    <strong>Success:</strong> Your repository will now execute this action 365 days a year. This script
+                    forcefully drops a daily timestamp file into the codebase at 7:00 AM IST, which successfully forces
+                    the GitHub Pages CDN to tear down its cache and rebuild the UI exactly at morning roll call.
+                </div>
+            </div>
+
+            <!-- PART 4: THE DAILY QUOTE ROSTER -->
+            <h2>PART 4: THE DAILY QUOTE ROSTER</h2>
+            <p>The dashboard draws from these exact rotating assessments to judge your team's velocity each morning
+                based on who is leading, trailing, or standing still.</p>
+
+            <div class="step-box">
+                <div class="step-title" style="color: var(--cyan);">FAME TIER (The Leader)</div>
+                <ul style="color: #b0b8d6; margin-bottom: 0;">
+                    <li>Absolutely obliterating the syllabus. The cloud bows before you.</li>
+                    <li>Senior DevOps engineers are taking notes on your pace.</li>
+                    <li>The terminal fears you. <code>kubectl</code> genuinely respects you.</li>
+                    <li>Your commit history belongs in a museum of human achievement.</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title" style="color: var(--amber);">MEDIOCRE TIER (The Middle)</div>
+                <ul style="color: #b0b8d6; margin-bottom: 0;">
+                    <li>Consistent? Sure. Exciting? Not exactly.</li>
+                    <li>Technically you're progressing. Technically.</li>
+                    <li>Neither fast nor slow — the DevOps equivalent of <code>/dev/null</code>.</li>
+                    <li>You showed up. That's... something, we guess.</li>
+                    <li>Perfectly mediocre. The bell curve salutes you.</li>
+                    <li>Progress: like enterprise software — functional but uninspiring.</li>
+                    <li>Middle of the pack. Statistically the safest place to be.</li>
+                    <li>Not bad, not great. You are the 404 of effort.</li>
+                    <li>A solid, dependable, thoroughly average day. Carry on.</li>
+                    <li>Running, just not at production speed.</li>
+                </ul>
+            </div>
+
+            <div class="step-box">
+                <div class="step-title" style="color: var(--red);">SHAME TIER (The Trailer)</div>
+                <ul style="color: #b0b8d6; margin-bottom: 0;">
+                    <li>Your Kubernetes cluster has more uptime than you do.</li>
+                    <li>Even the README has more commits today than you.</li>
+                    <li>The loading spinner works harder than you. Consistently.</li>
+                    <li>Your teammate's progress is your villain origin story.</li>
+                    <li>At this pace, Docker will be deprecated before you finish.</li>
+                    <li>Your progress bar is on life support. Stat.</li>
+                    <li><code>sudo apt-get install motivation</code> — package not found.</li>
+                    <li>Legend says your checklist is still on Day 1...</li>
+                    <li>Even the 404 page is more active than your progress.</li>
+                    <li>Terraform state has drifted — away from ambition.</li>
+                    <li>The course timer is still running. Your motivation, however...</li>
+                    <li><code>git blame</code> is pointing directly at your daily output.</li>
+                    <li>Your pipeline has more red than a London bus fleet.</li>
+                    <li>The DevOps gods submitted a wellness check request.</li>
+                    <li>If procrastination were a skill, you'd have a cert already.</li>
+                    <li>The cron job ran. You did not. Embarrassing.</li>
+                    <li>Your progress is in a crash loop. <code>kubectl describe motivation</code>.</li>
+                    <li>The CI pipeline finished faster than your progress.</li>
+                    <li>You are the bottleneck in your own CI/CD pipeline.</li>
+                    <li>Error 503: Ambition Unavailable.</li>
+                </ul>
+            </div>
+
+            <!-- PART 5: AUTOMATION ENGINE -->
+            <h2>PART 5: HIDDEN FEATURE (NO SETUP REQUIRED)</h2>
+            <div class="step-box">
+                <div class="step-title">🤖 Intelligent Weekly Snapshots & Teammate Auto-Discovery (Beta)</div>
+                <div class="callout info">
+                    <strong>Status:</strong> Active &nbsp;|&nbsp; <strong>Action Required:</strong> None
+                </div>
+                <p style="color: #b0b8d6;">AstraForge includes a silent, automated backend engine powered by GitHub
+                    Actions. Every Monday morning at precisely 7:00 AM IST, your repository will briefly wake up to run
+                    the <code>weekly-snapshot.js</code> intelligence script entirely on its own.</p>
+
+                <h4 style="margin-top: 15px; margin-bottom: 8px; color: #fff;">What does it do?</h4>
+                <ul>
+                    <li><b>Teammate Auto-Discovery:</b> The engine scans your entire repository root and dynamically
+                        discovers any new teammate <code>.json</code> files you or your friends have added to the
+                        project. It intelligently infers their display names—no hardcoding or manual configuration
+                        required!</li>
+                    <li><b>Progress Mathematics:</b> It opens every single progress file, calculates how many tasks each
+                        person finished that week, and determines exactly which Phase they are currently battling.</li>
+                    <li><b>Momentum Tracking:</b> It compares everyone's current stats against the previous Monday to
+                        calculate their "weekly delta" (e.g., <i>Uday generated +5% momentum this week!</i>).</li>
+                    <li><b>Permanent Logging:</b> It compiles all these rankings and math into a highly structured data
+                        file and permanently archives it in your repository's <code>/logs</code> folder (e.g.,
+                        <code>logs/2026-W11.json</code>).
+                    </li>
+                </ul>
+
+                <h4 style="margin-top: 20px; margin-bottom: 8px; color: #fff;">Future Roadmap & Implementations</h4>
+                <p style="color: #b0b8d6; margin-bottom: 10px;">This automated data is quietly building a rich history
+                    of your team's performance. In future AstraForge updates, this historical data will automatically
+                    power features like:</p>
+                <ul>
+                    <li><b>Momentum Graphs:</b> Beautiful line charts on the dashboard showing your team's velocity over
+                        the 6-month journey.</li>
+                    <li><b>The "Crown" System:</b> Automatic badges assigning the "Hustler of the Week" (highest %
+                        gained) and "Slacker of the Week" (lowest % gained) right on the multiplayer leaderboard.</li>
+                    <li><b>Personalized Snark:</b> Automated comments on your dashboard that analyze your personal
+                        logging history.</li>
+                    <li><b>Time-to-Completion Predictions:</b> AI-driven estimates calculating exactly what month you
+                        will finish the DevOps Roadmap based on your rolling 4-week moving average.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Inject the exact same beautiful deep space logic scripts from index.js -->
+    <script src="js/index.js"></script>
+    <script>
+        // Start the background
+        startMatrixBg();
+        startFloatingNodes();
+
+        // Nullify the index.js DOM manipulators meant for the actual index.html so it doesn't log errors
+        window.addEventListener('load', () => {
+            // Silence any DOM query errors from index.js missing form fields
+        });
+    </script>
+</body>
+
+</html>

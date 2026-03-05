@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstraForge · It's Morphin' Time</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+  <datalist id="tm-colors">
+    <option value="#ff007f"></option>
+    <option value="#aa00ff"></option>
+    <option value="#ff5500"></option>
+    <option value="#00ff55"></option>
+    <option value="#ff0022"></option>
+    <option value="#d05000"></option>
+  </datalist>
+
+  <!-- BG CANVASES -->
+  <canvas id="bg-canvas"></canvas>
+  <canvas id="rain-canvas"></canvas>
+
+  <div class="page">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="logo">Astra<span>Forge</span></div>
+      <div class="tagline"><em>It's Morphin' Time</em><br>Track. Compare. Compete.</div>
+    </div>
+
+    <!-- ALREADY CONFIGURED BANNER -->
+    <div class="cfg-banner" id="cfg-banner">
+      <span class="cfg-banner-text">✓ Configuration found — you're all set</span>
+      <a href="javascript:scrollToLaunch()" class="cfg-banner-link" title="Scroll to Launch">&darr;</a>
+    </div>
+
+    <!-- SETUP CARD -->
+    <div class="setup-card">
+      <div class="card-top-bar"></div>
+
+      <!-- Section 1: GitHub -->
+      <div class="form-section">
+        <div class="section-hdr">
+          <span class="section-icon">⎔</span>
+          <div>
+            <div class="section-title">GitHub Repository</div>
+            <div class="section-sub">Progress is stored as JSON files in your repo — syncs across all your devices</div>
+          </div>
+        </div>
+        <div class="field-grid" style="margin-bottom:12px">
+          <div class="field">
+            <label>Username / Org</label>
+            <input id="f-owner" placeholder="your-github-username" oninput="validate()" onchange="validate()">
+            <span class="field-err-msg">Required</span>
+          </div>
+          <div class="field">
+            <label>Repository Name</label>
+            <input id="f-repo" placeholder="DevopsRoadMap" oninput="validate()" onchange="validate()">
+            <span class="field-err-msg">Required</span>
+          </div>
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label>Branch</label>
+            <input id="f-branch" placeholder="main" value="main" oninput="validate()">
+          </div>
+          <div class="field">
+            <label>Personal Access Token</label>
+            <input id="f-token" type="password" placeholder="ghp_xxxxxxxxxxxx" oninput="validate()"
+              onchange="validate()">
+            <span class="field-err-msg">Required</span>
+            <div class="field-hint">
+              <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">Create Fine-grained PAT
+                →</a><br>
+              <span style="opacity:0.8">Select specific repo & grant <code>Contents: Read and write</code></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: You -->
+      <div class="form-section">
+        <div class="section-hdr">
+          <span class="section-icon">◈</span>
+          <div>
+            <div class="section-title">Your Profile</div>
+            <div class="section-sub">Reads progress from this browser instantly — no waiting for GitHub</div>
+          </div>
+        </div>
+        <div class="field-grid">
+          <div class="field">
+            <label>Your Name</label>
+            <input id="f-myname" placeholder="e.g. Uday" oninput="validate()" onchange="validate()">
+            <span class="field-err-msg">Required</span>
+          </div>
+          <div class="field">
+            <label>Your Sync File in Repo</label>
+            <input id="f-mypath" placeholder="devops_roadmap_progress.json" value="devops_roadmap_progress.json"
+              oninput="validate()">
+            <div class="field-hint">Your progress syncs to this file on GitHub</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Teammates -->
+      <div class="form-section">
+        <div class="section-hdr">
+          <span class="section-icon">◉</span>
+          <div>
+            <div class="section-title">Teammates <span class="optional-tag">optional</span></div>
+            <div class="section-sub">Add friends doing the same course — they need GitHub Sync configured in their
+              roadmap</div>
+          </div>
+        </div>
+        <div id="tm-container"></div>
+        <button class="add-tm-btn" id="add-tm-btn" onclick="addTeammate()">+ Add Teammate</button>
+      </div>
+
+      <!-- Launch -->
+      <div class="launch-section">
+        <button class="launch-btn btn-dim" id="launch-btn" onclick="launch()">▶ Launch AstraForge</button>
+        <button class="launch-btn"
+          style="margin-top: 12px; background: transparent; border: 1.5px solid var(--cyan); color: var(--cyan); box-shadow: none;"
+          onclick="window.location.href='AstraForge_Operation_Manual.html'">📖 Operation Manual</button>
+        <p class="privacy-note">
+          Token is stored in your browser's localStorage only. Never sent anywhere except directly to GitHub's API over
+          HTTPS.<br>
+          Progress file is created automatically in your repo.
+        </p>
+      </div>
+    </div>
+
+    <footer class="footer">
+      AstraForge &middot; It's Morphin' Time<br>
+      <span style="color:var(--dim)">Powered by GitHub · Orbitron vibes · Zero telemetry</span>
+    </footer>
+
+  </div>
+
+  <script src="js/index.js"></script>
+</body>
+
+</html>

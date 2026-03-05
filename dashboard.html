@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstraForge - Mission Control</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <script src="js/phases.js"></script>
+
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+  <!-- BG CANVASES -->
+  <canvas id="bg-canvas"></canvas>
+  <canvas id="rain-canvas"></canvas>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <div class="header-eyebrow"><span class="live-dot"></span>Dashboard · live</div>
+      <h1 class="header-title">MORPHIN SEQUENCE INITIATED<span class="blink">_</span></h1>
+      <div class="header-sub" id="combined-quip"><span class="spinner"></span> Loading daily intelligence report…</div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-val" id="hdr-combined-pct">—</span>
+        <span class="meta-lbl">Combined %</span>
+      </div>
+      <div class="meta-div"></div>
+      <div class="meta-item">
+        <span class="meta-val" id="hdr-people">—</span>
+        <span class="meta-lbl">People</span>
+      </div>
+      <div class="meta-div"></div>
+      <div class="meta-item">
+        <span class="meta-val" id="hdr-total-done">—</span>
+        <span class="meta-lbl">Tasks Done</span>
+      </div>
+      <div class="meta-div"></div>
+      <div class="meta-item meta-btn" onclick="window.location.href='AstraForge_Operation_Manual.html'"
+        title="Operation Manual">
+        <span class="meta-val" style="font-size:.9rem">📖</span>
+        <span class="meta-lbl">Manual</span>
+      </div>
+      <div class="meta-div"></div>
+      <div class="meta-item meta-btn" onclick="window.location.href='index.html'" title="Settings">
+        <span class="meta-val" style="font-size:.9rem">⚙</span>
+        <span class="meta-lbl">Settings</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- COMBINED BAR + REFRESH BUTTON -->
+  <div class="global-bar-wrap">
+    <div class="global-bar-inner">
+      <span class="global-bar-label">Combined</span>
+      <div class="global-bar-track">
+        <div class="global-bar-fill" id="globalFill"></div>
+      </div>
+      <span class="global-bar-pct" id="globalPct">—</span>
+      <button class="refresh-btn" onclick="forceRefresh()" title="Refresh from GitHub now">↻ Refresh</button>
+    </div>
+  </div>
+
+  <!-- PERSON PANELS (built dynamically) -->
+  <div class="panels-wrap">
+    <div class="panels-grid" id="panels-grid"></div>
+  </div>
+
+  <!-- LEADERBOARD (hidden for 1 person) -->
+  <div class="leaderboard-wrap" id="leaderboard-wrap" style="display:none">
+    <div class="leaderboard-title">⚔ Leaderboard</div>
+    <div id="leaderboard"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-strip">
+    <a class="cta-btn" href="devops_roadmap.html" onclick="sessionStorage.setItem('auth_dash', 'true')">Open Grid
+      Terminal &rarr;</a>
+    <div class="footer-meta">
+      <span class="live-dot"></span>GitHub data refreshes every 10 min · <span id="last-refresh">—</span><br>
+      <a onclick="window.location.href='index.html'">⚙ Settings</a> ·
+      <a onclick="forceRefresh()">↻ Force refresh</a>
+      <span id="log-status"></span>
+    </div>
+  </div>
+
+
+
+  <script src="js/dashboard.js"></script>
+</body>
+
+</html>
